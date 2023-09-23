@@ -16,12 +16,15 @@ ARPG_Bullet_C::ARPG_Bullet_C()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Projectile"));
-	Mesh->SetupAttachment(RootComponent);
+	Mesh->SetupAttachment(GetRootComponent());
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 	ProjectileMovementComponent->InitialSpeed = 2000.f;
 	ProjectileMovementComponent->MaxSpeed = 2000.f;
 	ProjectileMovementComponent->ProjectileGravityScale = 0.2f;
+
+	
+
 }
 
 // Called when the game starts or when spawned
@@ -36,12 +39,16 @@ void ARPG_Bullet_C::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetActorLocation().ToString());
+
 	bool HasHit = 
 	UKismetSystemLibrary::CapsuleTraceSingleForObjects
 	(
 		this,
-		Mesh->GetComponentLocation(),
-		Mesh->GetComponentLocation(),
+		GetActorLocation(),
+		//Mesh->GetRelativeLocation(),
+		GetActorLocation(),
+		//Mesh->GetRelativeLocation(),
 		30.f,
 		30.f,
 		ObjectsToHit,
@@ -56,7 +63,10 @@ void ARPG_Bullet_C::Tick(float DeltaTime)
 	{
 		DEBUG::Print("EXPLOTION");
 
-		GetWorld()->SpawnActor<AActor>(ExplotionIMG, Mesh->GetComponentLocation(), FRotator(0, 0, 0));
+		//GetWorld()->SpawnActor<AActor>(ExplotionIMG->StaticClass(), OutHit.ImpactPoint, GetActorRotation());
+
+		GetWorld()->SpawnActor<AExplotion_C>(ExplotionIMG, OutHit.Location, FRotator::ZeroRotator, SpawnInfo);
+
 
 		Destroy();
 	}

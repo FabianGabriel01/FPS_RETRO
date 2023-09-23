@@ -9,6 +9,7 @@
 class UPaperFlipbookComponent;
 class UArrowComponent;
 class USphereComponent;
+class USceneComponent;
 
 
 UCLASS()
@@ -23,6 +24,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere)
+	USceneComponent* SceneComponent;
 
 	UPROPERTY(EditAnywhere)
 		UArrowComponent* Arrow;

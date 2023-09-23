@@ -8,6 +8,8 @@
 
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
+class USceneComponent;
+class AExplotion_C;
 
 UCLASS()
 class FPS_RETRO_API ARPG_Bullet_C : public AActor
@@ -37,7 +39,7 @@ public:
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectsToHit;
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<AActor> ExplotionIMG;
+		TSubclassOf<AExplotion_C> ExplotionIMG;
 
 	FActorSpawnParameters SpawnInfo;
 

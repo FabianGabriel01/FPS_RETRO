@@ -18,14 +18,17 @@ AExplotion_C::AExplotion_C()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
+	SetRootComponent(SceneComponent);
+
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
-	Arrow->SetupAttachment(RootComponent);
+	Arrow->SetupAttachment(SceneComponent);
 
 	Flipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Flipbook"));
-	Flipbook->SetupAttachment(RootComponent);
+	Flipbook->SetupAttachment(SceneComponent);
 
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
-	SphereCollision->SetupAttachment(RootComponent);
+	SphereCollision->SetupAttachment(SceneComponent);
 
 	SphereCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 
@@ -40,13 +43,13 @@ void AExplotion_C::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetLifeSpan(2.5);
+	SetLifeSpan(50.5);
 	
 }
 
 void AExplotion_C::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UGameplayStatics::ApplyDamage(OtherActor, 10.f, GetInstigatorController(), this, DamageType);
+	//UGameplayStatics::ApplyDamage(OtherActor, 10.f, GetInstigatorController(), this, DamageType);
 
 }
 

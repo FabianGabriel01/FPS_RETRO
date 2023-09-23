@@ -2,6 +2,7 @@
 
 
 #include "Weapon_Base_C.h"
+#include "Character_Base_C.h"
 #include "DebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,7 +28,7 @@ AWeapon_Base_C::AWeapon_Base_C()
     TraceStart->SetupAttachment(Flipbook);
 
 
-
+    ActorsToIgnore.Add(UGameplayStatics::GetActorOfClass(this, TSubclassOf<ACharacter_Base_C>()));
 }
 
 // Called when the game starts or when spawned

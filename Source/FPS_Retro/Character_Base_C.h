@@ -37,6 +37,8 @@ protected:
 
 	void FIRE();
 
+	void ReleasedFIRE();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

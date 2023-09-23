@@ -11,6 +11,7 @@
 #include "DebugHelpers.h"
 #include "Components/ChildActorComponent.h"
 #include "Weapon_Base_C.h"
+#include "Minigun_C.h"
 
 // Sets default values
 ACharacter_Base_C::ACharacter_Base_C()
@@ -65,6 +66,8 @@ void ACharacter_Base_C::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 		PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &ACharacter::Jump);
 		PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACharacter_Base_C::FIRE);
+		PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACharacter_Base_C::ReleasedFIRE);
+
 
 
 
@@ -100,5 +103,15 @@ void ACharacter_Base_C::FIRE()
 		CastWeapon->Attack();
 	}
 					
+}
+
+void ACharacter_Base_C::ReleasedFIRE()
+{
+	////Clear the MINI GUN
+	AMinigun_C* CastWeapon = Cast<AMinigun_C>(Weapon->GetChildActor());
+	if (CastWeapon)
+	{
+		CastWeapon->StopAttacking();
+	}
 }
 

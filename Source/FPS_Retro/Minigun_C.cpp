@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Shotgun_C.h"
+#include "Minigun_C.h"
 #include "PaperFlipbookComponent.h"
 #include "PaperSpriteComponent.h"
 #include "DebugHelpers.h"
@@ -10,25 +10,30 @@
 #include "Components/ArrowComponent.h"
 #include "Components/SceneComponent.h"
 
-void AShotgun_C::Attack()
+void AMinigun_C::Attack()
 {
-	if (bCanFire) 
-	{
-		AmmoForShotgun--;
-		Flipbook->SetFlipbook(FiringFlipbook);
-		FIRE();
-		bCanFire = false;
-		GetWorld()->GetTimerManager().SetTimer(Delay, this, &AShotgun_C::StopAttacking, FireRate);
-	}
+
+	bShouldFire = true;
+	GetWorld()->GetTimerManager().SetTimer(Delay, this, &AMinigun_C::KeepFiring, FireRate, true);
 
 	////Add Timer to RATE RIFe
 	///Set FLipbook to idle
 }
 
-void AShotgun_C::StopAttacking()
+void AMinigun_C::StopAttacking()
 {
 	DEBUG::Print(TEXT("STOP ATTACKING"));
 	Flipbook->SetFlipbook(IdleFlipbook);
 	GetWorld()->GetTimerManager().ClearTimer(Delay);
-	bCanFire = true;
+	bShouldFire = false;
+}
+
+void AMinigun_C::KeepFiring()
+{
+	if (bShouldFire) 
+	{
+		AmmoForPistol--;
+		Flipbook->SetFlipbook(FiringFlipbook);
+		FIRE();
+	}
 }

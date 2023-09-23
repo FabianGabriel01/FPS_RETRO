@@ -30,5 +30,6 @@ void AChildWeapon_Base_C::StopAttacking()
 {
 	DEBUG::Print(TEXT("STOP ATTACKING"));
 	Flipbook->SetFlipbook(IdleFlipbook);
+	GetWorld()->GetTimerManager().ClearTimer(Delay);
 	bCanFire = true;
 }

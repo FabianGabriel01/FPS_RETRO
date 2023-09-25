@@ -9,6 +9,7 @@
 class UPaperFlipbookComponent;
 class UArrowComponent;
 class USceneComponent;
+class ARPG_Bullet_C;
 
 UCLASS()
 class FPS_RETRO_API AWeapon_Base_C : public AActor
@@ -43,6 +44,9 @@ protected:
 		float AmmoForShotgun = 10;
 
 	UPROPERTY(EditAnywhere)
+		float AmmoForRPG = 10;
+
+	UPROPERTY(EditAnywhere)
 		bool bCanFire;
 
 	UPROPERTY(EditAnywhere)
@@ -54,11 +58,18 @@ protected:
 
 	TArray<AActor*> ActorsToIgnore;
 
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ARPG_Bullet_C> RPG_Bullet;
+
+	FActorSpawnParameters SpawnInfo;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void FIRE();
+
+	void FIRE_RPG();
 
 
 

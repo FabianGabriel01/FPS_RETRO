@@ -8,6 +8,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Explotion_C.h"
+#include "Character_Base_C.h"
 
 // Sets default values
 ARPG_Bullet_C::ARPG_Bullet_C()
@@ -23,7 +24,7 @@ ARPG_Bullet_C::ARPG_Bullet_C()
 	ProjectileMovementComponent->MaxSpeed = 2000.f;
 	ProjectileMovementComponent->ProjectileGravityScale = 0.2f;
 
-	
+	ActorsToIgnore.Add(UGameplayStatics::GetPlayerController(this, 0));
 
 }
 

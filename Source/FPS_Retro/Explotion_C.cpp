@@ -43,7 +43,7 @@ void AExplotion_C::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetLifeSpan(50.5);
+	SetLifeSpan(1.5);
 	
 }
 

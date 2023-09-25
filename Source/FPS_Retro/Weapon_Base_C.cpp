@@ -10,6 +10,7 @@
 #include "PaperSpriteComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/SceneComponent.h"
+#include "RPG_Bullet_C.h"
 
 
 // Sets default values
@@ -69,6 +70,14 @@ void AWeapon_Base_C::FIRE()
         );
 
         //ApplyDamage to the HitActor
+    }
+}
+
+void AWeapon_Base_C::FIRE_RPG()
+{
+    if (AmmoForRPG > 0) 
+    {
+        GetWorld()->SpawnActor<ARPG_Bullet_C>(RPG_Bullet, TraceStart->GetComponentLocation(), FRotator::ZeroRotator, SpawnInfo);
     }
 }
 

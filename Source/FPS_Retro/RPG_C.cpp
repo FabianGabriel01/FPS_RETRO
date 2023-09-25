@@ -12,12 +12,18 @@
 
 void ARPG_C::Attack()
 {
-	if (bCanFire)
+	if (bCanFire && AmmoForRPG > 0)
 	{
 		bCanFire = false;
 		AmmoForRPG--;
-		Flipbook->SetFlipbook(FiringFlipbook);
 		FIRE_RPG();
+
+		if (bShouldFire) 
+		{
+			Flipbook->SetFlipbook(FiringFlipbook);
+			bShouldFire = false;
+
+		}
 		GetWorld()->GetTimerManager().SetTimer(Delay, this, &ARPG_C::StopAttacking, FireRate);
 	}
 
@@ -25,15 +31,14 @@ void ARPG_C::Attack()
 
 void ARPG_C::StopAttacking()
 {
-	DEBUG::Print(TEXT("STOP ATTACKING"));
 	Flipbook->SetFlipbook(IdleFlipbook);
-	GetWorld()->GetTimerManager().ClearTimer(Delay);
-
-	GetWorld()->GetTimerManager().SetTimer(Delay, this, &ARPG_C::DoOnce, NDelay);
+	bCanFire = true;
+	bShouldFire = true;
 
 }
 
 void ARPG_C::DoOnce()
 {
-	bCanFire = true;
+	//GetWorld()->GetTimerManager().ClearTimer(Delay);
+
 }

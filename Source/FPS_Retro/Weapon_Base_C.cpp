@@ -64,7 +64,7 @@ void AWeapon_Base_C::FIRE()
         DoLineTraceSingleByObject
         (
             TraceStart->GetComponentLocation(),
-            TraceStart->GetForwardVector() * 400000,
+            TraceStart->GetForwardVector() * 400000  + TraceStart->GetComponentLocation(),
             true,
             true
         );
@@ -78,6 +78,31 @@ void AWeapon_Base_C::FIRE_RPG()
     if (AmmoForRPG > 0) 
     {
         GetWorld()->SpawnActor<ARPG_Bullet_C>(RPG_Bullet, TraceStart->GetComponentLocation(), FRotator::ZeroRotator, SpawnInfo);
+    }
+}
+
+void AWeapon_Base_C::FIRE_Punch()
+{
+    if (GetWorld()) 
+    {
+        FHitResult HitActor = DoLineTraceSingleByObject
+        (
+            TraceStart->GetComponentLocation(),
+            TraceStart->GetForwardVector() * 400 + TraceStart->GetComponentLocation(),
+            true,
+            true
+        );
+
+        /////////FOR ADDING IMPULSE
+        if (HitActor.bBlockingHit) 
+        {
+            UStaticMeshComponent* Comp = Cast<UStaticMeshComponent>(HitActor.GetActor()->GetRootComponent());
+            if (Comp && HitActor.GetActor()->IsRootComponentMovable()) 
+            {
+                Comp->AddImpulse(TraceStart->GetForwardVector() * 1000 * Comp->GetMass());
+            }
+            
+        }
     }
 }
 

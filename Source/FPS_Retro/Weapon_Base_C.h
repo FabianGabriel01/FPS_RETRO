@@ -71,6 +71,8 @@ public:
 
 	void FIRE_RPG();
 
+	void FIRE_Punch();
+
 
 
 	virtual void Attack();
